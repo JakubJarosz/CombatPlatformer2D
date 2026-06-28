@@ -171,8 +171,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Offset: {x: -0.004885912, y: 0.84736526}
+  m_Size: {x: 0.8615384, y: 1.6503804}
   m_Direction: 0
 --- !u!50 &55198488
 Rigidbody2D:
@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 55198486}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.94, y: -3.06, z: 0}
+  m_LocalPosition: {x: 4.94, y: -4.457, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 136101167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.38, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -857,7 +857,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   gameInput: {fileID: 1837713810}
   moveSpeed: 4
-  moveInputs: 0
 --- !u!114 &901659326
 MonoBehaviour:
   m_ObjectHideFlags: 0
