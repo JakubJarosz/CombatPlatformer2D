@@ -5,21 +5,25 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer playerSprite;
+    private PlayerJump playerJump;
     private PlayerDetection detection;
 
     [SerializeField] private GameInputs gameInput;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float jumpForce;
 
     // Movement variables
     private float moveInputs;
 
+    // Event variables
+    public event Action PerformJump;
+
     private enum PlayerState {
         Idle,
         Walk,
-        Jump,
-        Fall,
+        Air,
         Attack
     }
 
@@ -27,8 +31,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        playerJump = GetComponent<PlayerJump>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
         detection = GetComponentInChildren<PlayerDetection>();
+    }
+
+    private void Start() {
+        playerJump.JumpPerformed += PlayerJump_JumpPerformed;
     }
 
     private void Update() {
@@ -44,19 +53,15 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Attack:
                 HandleAttack();
                 break;
-            case PlayerState.Jump:
-                HandleJump();
+            case PlayerState.Air:
+                HandleAir();
                 break;
-            case PlayerState.Fall:
-                HandleFall();
-                break;
-
         }
     }
 
     private void HandleState() {
         if (!detection.IsGrounded()) {
-            state = rb.linearVelocity.y > 0 ? PlayerState.Jump : PlayerState.Fall;
+            state = PlayerState.Air;
         } else if (moveInputs != 0) {
             state = PlayerState.Walk;
         } else {
@@ -77,14 +82,14 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
     }
 
-    private void HandleJump() {
+    private void HandleAir() {
         rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
         Flip();
     }
-
-    private void HandleFall() {
-        rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
-        Flip();
+    // Event functions
+    private void PlayerJump_JumpPerformed() {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        PerformJump?.Invoke();
     }
 
     // Helper functions
@@ -97,5 +102,9 @@ public class PlayerController : MonoBehaviour
 
     public float GetMoveInput() {
         return moveInputs != 0 ? 1 : 0;
+    }
+
+    public float GetYVelocity() {
+        return rb.linearVelocity.y;
     }
 }
