@@ -36,7 +36,6 @@ public class EnemyController : MonoBehaviour
                 HandleAttack();
                 break;
         }
-        Debug.Log(state);
     }
 
     private void HandleState() {
@@ -55,14 +54,21 @@ public class EnemyController : MonoBehaviour
 
     private void HandleWalk() {
         rb.linearVelocity = new Vector2(moveSpeed * detection.FacingDir(), rb.linearVelocity.y);
+        Flip();
     }
 
     private void HandleAttack() {
         rb.linearVelocity = Vector3.zero;
+        Flip();
     }
 
-    // Helper funciton
+    // Helper function
     private void Flip() {
+        enemySprite.flipX = detection.FacingDir() < 0;
+    }
 
+    // Return function
+    public bool IsWalking() {
+        return state == EnemyState.Walk;
     }
 }

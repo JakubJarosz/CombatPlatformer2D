@@ -17,6 +17,9 @@ public class EnemyVisual : MonoBehaviour
         enemyAttack.PerformRangeAttack += EnemyAttack_PerformRangeAttack;
     }
 
+    private void Update() {
+        anim.SetBool("Move", controller.IsWalking());
+    }
     private void EnemyAttack_PerformRangeAttack() {
         anim.SetTrigger("Range");
     }
