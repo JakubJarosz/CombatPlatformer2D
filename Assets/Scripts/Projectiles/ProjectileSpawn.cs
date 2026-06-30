@@ -19,8 +19,8 @@ public class ProjectileSpawn : MonoBehaviour
         switch(spawnType) {
             case SpawnType.Static:
                 Vector2 pos = (Vector2)transform.position + new Vector2(xOffset * detection.FacingDir(), yOffset);
-                GameObject projectile = Instantiate(projectilePrefab, pos, Quaternion.identity);
-                projectile.GetComponent<Projectile>().SetFacing(detection.FacingDir());
+                Projectile projectile = Instantiate(projectilePrefab, pos, Quaternion.identity).GetComponent<Projectile>();
+                projectile.SetFacing(detection.FacingDir());
                 break;  
             case SpawnType.Tracking:
                 break;
