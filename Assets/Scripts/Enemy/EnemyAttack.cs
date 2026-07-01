@@ -5,6 +5,7 @@ public class EnemyAttack : MonoBehaviour
 {
     private EnemyDetection detection;
 
+    [SerializeField] private AttackDataSO attackData;
     [SerializeField] private float meleeAttackSpeed;
     [SerializeField] private float rangeAttackSpeed;
 
@@ -15,7 +16,7 @@ public class EnemyAttack : MonoBehaviour
     private float rangeTimer;
 
     public event Action PerformMeleeAttack;
-    public event Action PerformRangeAttack;
+    public event Action<int> PerformRangeAttack;
 
     private void Awake() {
         detection = GetComponentInChildren<EnemyDetection>();
@@ -45,7 +46,7 @@ public class EnemyAttack : MonoBehaviour
             rangeTimer += Time.deltaTime;
             if (rangeTimer >= rangeAttackSpeed) {
                 rangeTimer = 0f;
-                PerformRangeAttack?.Invoke();
+                PerformRangeAttack?.Invoke(attackData.damage);
             }
         } else {
             rangeTimer = rangeAttackSpeed / 2;

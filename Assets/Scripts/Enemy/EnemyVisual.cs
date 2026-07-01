@@ -20,7 +20,7 @@ public class EnemyVisual : MonoBehaviour
     private void Update() {
         anim.SetBool("Move", controller.IsWalking());
     }
-    private void EnemyAttack_PerformRangeAttack() {
+    private void EnemyAttack_PerformRangeAttack(int damage) {
         anim.SetTrigger("Range");
     }
 
