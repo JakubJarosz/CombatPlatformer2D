@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private Collider2D col;
     private SpriteRenderer playerSprite;
     private PlayerJump playerJump;
     private PlayerDetection detection;
@@ -32,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         playerJump = GetComponent<PlayerJump>();
+        col = GetComponent<Collider2D>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
         detection = GetComponentInChildren<PlayerDetection>();
     }
@@ -43,9 +45,9 @@ public class PlayerController : MonoBehaviour
     private void Update() {
         moveInputs = gameInput.GetMoveInput();
         HandleState();
+        Movement();
         switch (state) {
             case PlayerState.Idle:
-                HandleIdle();
                 break;
             case PlayerState.Walk:
                 HandleWalk();
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
                 HandleAir();
                 break;
         }
+        Debug.Log(state);
     }
 
     private void HandleState() {
@@ -69,12 +72,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void HandleIdle() {
-        rb.linearVelocity = Vector2.zero;
+    private void Movement() {
+        rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
     }
 
     private void HandleWalk() {
-        rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
         Flip();
     }
 
@@ -83,7 +85,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private void HandleAir() {
-        rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
         Flip();
     }
     // Event functions

@@ -30,6 +30,7 @@ public class EnemyAttack : MonoBehaviour
     }
 
     private void MeleeAttack() {
+        if (GameManager.instance.isPlayerDead) return;
         if (IsInMeleeRange) {
             meleeTimer += Time.deltaTime;
             if (meleeTimer >= meleeAttackSpeed) {
@@ -42,6 +43,7 @@ public class EnemyAttack : MonoBehaviour
     }
 
     private void RangeAttack() {
+        if (GameManager.instance.isPlayerDead) return;
         if (IsInRangeRange) {
             rangeTimer += Time.deltaTime;
             if (rangeTimer >= rangeAttackSpeed) {

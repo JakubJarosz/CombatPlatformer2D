@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeea8337ec123f458d2f85c70457991, type: 3}
   m_Name: ArrowProjectile
   m_EditorClassIdentifier: Assembly-CSharp::AttackDataSO
-  damage: 10
+  damage: 25

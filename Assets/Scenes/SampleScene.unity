@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 55198487}
   - component: {fileID: 55198490}
   - component: {fileID: 55198491}
+  - component: {fileID: 55198492}
   m_Layer: 7
   m_Name: Archer
   m_TagString: Untagged
@@ -246,8 +247,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caafedb0b68f1f349b5817956a109b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  attackData: {fileID: 11400000, guid: d578eeeab82c3824185a5082c9258ddf, type: 2}
   meleeAttackSpeed: 2
   rangeAttackSpeed: 2
+--- !u!114 &55198492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55198486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117dd65c232d0964c9e51bb1d36e70b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  health: 50
+  deathTimer: 5
 --- !u!1 &136101167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,6 +1112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   health: 100
+  deathTimer: 5
 --- !u!1 &1134781785
 GameObject:
   m_ObjectHideFlags: 0
