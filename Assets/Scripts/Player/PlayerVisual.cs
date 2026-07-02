@@ -15,8 +15,18 @@ public class PlayerVisual : MonoBehaviour {
     }
 
     private void Start() {
+        controller.PerformBlock += Controller_PerformBlock;
+        controller.PerformAttack += Controller_PerformAttack;
         health.TriggerDeath += Health_TriggerDeath;
         health.TriggerHurt += Health_TriggerHurt;
+    }
+
+    private void Controller_PerformAttack() {
+        anim.SetTrigger("Attack");
+    }
+
+    private void Controller_PerformBlock(bool obj) {
+        anim.SetBool("Block", obj);
     }
 
     private void Health_TriggerHurt() {

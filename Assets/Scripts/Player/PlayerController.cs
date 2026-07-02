@@ -4,9 +4,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private Collider2D col;
     private SpriteRenderer playerSprite;
     private PlayerJump playerJump;
+    private PlayerAttack playerAttack;
+    private PlayerBlock playerBlock;
     private PlayerDetection detection;
 
     [SerializeField] private GameInputs gameInput;
@@ -20,33 +21,39 @@ public class PlayerController : MonoBehaviour
 
     // Event variables
     public event Action PerformJump;
+    public event Action<bool> PerformBlock;
+    public event Action PerformAttack;
 
     private enum PlayerState {
         Idle,
         Walk,
         Air,
-        Attack
+        Attack,
+        Block
     }
 
-    private PlayerState state;
+    private PlayerState currentState;
+    private PlayerState previousState;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         playerJump = GetComponent<PlayerJump>();
-        col = GetComponent<Collider2D>();
+        playerBlock = GetComponent<PlayerBlock>();
+        playerAttack = GetComponent<PlayerAttack>();
         playerSprite = GetComponentInChildren<SpriteRenderer>();
         detection = GetComponentInChildren<PlayerDetection>();
     }
 
     private void Start() {
         playerJump.JumpPerformed += PlayerJump_JumpPerformed;
+        playerAttack.TryToAttack += PlayerAttack_TryToAttack;
     }
 
     private void Update() {
         moveInputs = gameInput.GetMoveInput();
         HandleState();
         Movement();
-        switch (state) {
+        switch (currentState) {
             case PlayerState.Idle:
                 break;
             case PlayerState.Walk:
@@ -58,17 +65,35 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Air:
                 HandleAir();
                 break;
+            case PlayerState.Block:
+                HandleBlock();
+                break;
         }
-        Debug.Log(state);
+        Debug.Log(currentState);
     }
 
     private void HandleState() {
-        if (!detection.IsGrounded()) {
-            state = PlayerState.Air;
+        previousState = currentState;
+        if (playerBlock.isBlocking && detection.IsGrounded() && playerAttack.isAttacking) {
+            currentState = PlayerState.Block;
+        } else if (!detection.IsGrounded()) {
+            currentState = PlayerState.Air;
         } else if (moveInputs != 0) {
-            state = PlayerState.Walk;
+            currentState = PlayerState.Walk;
         } else {
-            state = PlayerState.Idle;
+            currentState = PlayerState.Idle;
+        }
+        if (currentState != previousState) {
+            HandleStateChange();
+        }
+    }
+
+    private void HandleStateChange() {
+        bool IsBlocking = currentState == PlayerState.Block;
+        PerformBlock?.Invoke(IsBlocking);
+        GetComponent<Health>().CanTakeDamage(!IsBlocking);
+        if (currentState == PlayerState.Attack) {
+            PerformAttack?.Invoke();
         }
     }
 
@@ -91,6 +116,17 @@ public class PlayerController : MonoBehaviour
     private void PlayerJump_JumpPerformed() {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         PerformJump?.Invoke();
+    }
+
+    private void PlayerAttack_TryToAttack() {
+        if (detection.IsGrounded()) {
+            currentState = PlayerState.Attack;
+            PerformAttack?.Invoke();
+        }
+    }
+
+    private void HandleBlock() {
+        rb.linearVelocity = Vector2.zero;
     }
 
     // Helper functions
