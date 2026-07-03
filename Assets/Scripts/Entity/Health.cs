@@ -5,10 +5,11 @@ using UnityEngine;
 public class Health : MonoBehaviour, IDamageable {
 
     [SerializeField] private int health;
+    [SerializeField] private float hurtTimer;
     [SerializeField] private float deathTimer;
 
     public event Action TriggerDeath;
-    public event Action TriggerHurt;
+    public event Action<float> TriggerHurt;
     public event Action Hit;
 
     private bool canTakeDamage = true;
@@ -20,7 +21,9 @@ public class Health : MonoBehaviour, IDamageable {
         if (health <= 0) {
             Death();
         } else {
-            TriggerHurt?.Invoke();
+            TriggerHurt?.Invoke(hurtTimer);
+            canTakeDamage = false;
+            StartCoroutine(InviTimer());
         }
     }
 
@@ -32,6 +35,11 @@ public class Health : MonoBehaviour, IDamageable {
     private IEnumerator DeathDelay() {
         yield return new WaitForSeconds(deathTimer);
         Destroy(gameObject);
+    }
+
+    private IEnumerator InviTimer() {
+        yield return new WaitForSeconds(hurtTimer);
+        canTakeDamage = true;
     }
 
     public void CanTakeDamage(bool canTake) {

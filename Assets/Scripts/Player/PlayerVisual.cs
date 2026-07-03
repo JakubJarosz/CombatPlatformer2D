@@ -34,7 +34,7 @@ public class PlayerVisual : MonoBehaviour {
         anim.SetBool("Block", obj);
     }
 
-    private void Health_TriggerHurt() {
+    private void Health_TriggerHurt(float hurtTime) {
         anim.SetTrigger("Hurt");
     }
 

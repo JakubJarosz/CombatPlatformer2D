@@ -4,7 +4,8 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private GameInputs inputs;
-    [SerializeField] private AttackDataSO attackDataSO;
+    [SerializeField] private AttackDataSO lightMeleeSO;
+    [SerializeField] private AttackDataSO heavyMeleeSO;
 
     public bool isAttacking { get; private set; }
     private bool canQueueAttack;
@@ -28,7 +29,6 @@ public class PlayerAttack : MonoBehaviour
             canQueueAttack = false;
             return;
         }
-        ;
     }
 
     public void ResetCombo() {
@@ -59,8 +59,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-
-    //public int GetDamage() {
-    //    return comboCount == 3 ? attackSO[1].damage : attackSO[0].damage;
-    //}
+    public int GetDamage() {
+        return comboCount == 3 ? heavyMeleeSO.damage : lightMeleeSO.damage;
+    }
 }

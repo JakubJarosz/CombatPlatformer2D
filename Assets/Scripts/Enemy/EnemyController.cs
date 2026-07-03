@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     private enum EnemyState {
         Idle,
         Walk,
-        Attack
+        Attack,
     }
 
     private EnemyState state;

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     // Movement variables
     private float moveInputs;
+    public float facingDir { get; private set; }
 
     // Event variables
     public event Action PerformJump;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         playerAttack.TryToAttack += PlayerAttack_TryToAttack;
         playerAttack.EndAttack += PlayerAttack_EndAttack;
         playerHealth.TriggerHurt += PlayerHealth_TriggerHurt;
+        playerHealth.TriggerDeath += PlayerHealth_TriggerDeath;
         playerHealth.Hit += PlayerHealth_Hit;
     }
 
@@ -134,7 +136,7 @@ public class PlayerController : MonoBehaviour
         currentState = PlayerState.Idle;
     }
 
-    private void PlayerHealth_TriggerHurt() {
+    private void PlayerHealth_TriggerHurt(float hurtTime) {
         playerAttack.ResetCombo();
     }
 
@@ -144,6 +146,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void PlayerHealth_TriggerDeath() {
+        gameObject.layer = LayerMask.NameToLayer("Dead");
+    }
 
     private void HandleBlock() {
         rb.linearVelocity = Vector2.zero;
@@ -153,6 +158,7 @@ public class PlayerController : MonoBehaviour
     private void Flip() {
         if (moveInputs == 0) return;
         playerSprite.flipX = moveInputs < 0;
+        facingDir = moveInputs > 0 ? 1 : -1;
     }
 
     // Return functions
