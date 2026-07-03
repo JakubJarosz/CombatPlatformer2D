@@ -40,7 +40,7 @@ public class ProjectileSpawn : MonoBehaviour
                 break;  
             case SpawnType.Tracking:
                 if (detection.IsPlayerDetected()) {
-                    Vector2 posTrack = (Vector2)transform.position + new Vector2(detection.GetDetectedPlayer().position.x, yOffset);
+                    Vector2 posTrack = new Vector2(detection.GetDetectedPlayer().position.x, yOffset);
                     Projectile projectileTrack = Instantiate(projectilePrefab, posTrack, Quaternion.identity).GetComponent<Projectile>();
                     projectileTrack.SetDamage(attackDamage);
                 }

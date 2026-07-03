@@ -27,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
         IsInMeleeRange = detection.IsInMeleeRange();
         IsInRangeRange = detection.IsInRangeRange();
         MeleeAttack();
-        //RangeAttack();
+        RangeAttack();
     }
 
     private void MeleeAttack() {
@@ -42,15 +42,15 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    //private void RangeAttack() {
-    //    if (IsInRangeRange) {
-    //        rangeTimer += Time.deltaTime;
-    //        if (rangeTimer >= rangeAttackSpeed) {
-    //            rangeTimer = 0f;
-    //            PerformRangeAttack?.Invoke(rangeAttackData.damage);
-    //        }
-    //    } else {
-    //        rangeTimer = rangeAttackSpeed / 2;
-    //    }
-    //}
+    private void RangeAttack() {
+        if (IsInRangeRange && !IsInMeleeRange) {
+            rangeTimer += Time.deltaTime;
+            if (rangeTimer >= rangeAttackSpeed) {
+                rangeTimer = 0f;
+                PerformRangeAttack?.Invoke(rangeAttackData.damage);
+            }
+        } else {
+            rangeTimer = rangeAttackSpeed / 2;
+        }
+    }
 }

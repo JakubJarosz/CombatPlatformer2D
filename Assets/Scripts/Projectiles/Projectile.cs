@@ -23,26 +23,26 @@ public class Projectile : MonoBehaviour
     private void Update() {
         destroyTimer += Time.deltaTime;
         Tryjectory();
-        DestroyProjectile();
+        //DestroyProjectile();
     }
 
     private void Tryjectory() {
         rb.linearVelocity = new Vector2(projectileDir * traverseSpeed, 0f);
     }
 
-    private void DestroyProjectile() {
-        if (destroyTimer >= projecitileDestroyTime) {
-            Destroy(gameObject);
-        }
-    }
+    //private void DestroyProjectile() {
+    //    if (destroyTimer >= projecitileDestroyTime) {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        IDamageable hit = collision.GetComponent<IDamageable>();
-        if (hit != null) {
-            hit.TakeDamage(projectileDamage);
-            Destroy(gameObject);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision) {
+    //    IDamageable hit = collision.GetComponent<IDamageable>();
+    //    if (hit != null) {
+    //        hit.TakeDamage(projectileDamage);
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     public void SetFacing(float facing) {
         projectileDir = facing;

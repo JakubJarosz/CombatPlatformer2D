@@ -37,6 +37,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: e869ada6bbc922345a047397a6a7a892, type: 2}
     - target: {fileID: 2511241288573053122, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: rangeAttackData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5c9f707389a8d8a41acd8a63774c34cd, type: 2}
+    - target: {fileID: 2511241288573053122, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: meleeAttackSpeed
       value: 2
       objectReference: {fileID: 0}
