@@ -28,6 +28,14 @@ public class EnemyDetection : MonoBehaviour
         return Physics2D.OverlapBox(transform.position, detectionSize, 0f, playerLayer);
     }
 
+    public Transform GetDetectedPlayer() {
+        Collider2D target = Physics2D.OverlapBox(transform.position, detectionSize, 0f, playerLayer);
+        if (target != null) {
+            return target.transform;
+        }
+        return null;
+    }
+
     public float FacingDir() {
         Collider2D player = Physics2D.OverlapBox(transform.position, detectionSize, 0f, playerLayer);
         if (player == null) return 0.0f;

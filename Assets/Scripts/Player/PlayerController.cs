@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour
                 HandleBlock();
                 break;
         }
-        Debug.Log(currentState);
     }
 
     private void HandleState() {

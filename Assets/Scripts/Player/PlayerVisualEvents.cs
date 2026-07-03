@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerVisualEvents : MonoBehaviour
 {
+    [SerializeField] private PlayerMeleeHitBox hitBox;
     private PlayerAttack attack;
 
     private void Awake() {
@@ -14,5 +15,6 @@ public class PlayerVisualEvents : MonoBehaviour
 
     public void CanQueueAttack() {
         attack.CanQueueAttack();
+        hitBox.MeleeHit();
     }
 }

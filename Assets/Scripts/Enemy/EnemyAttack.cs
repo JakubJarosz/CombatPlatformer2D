@@ -5,7 +5,8 @@ public class EnemyAttack : MonoBehaviour
 {
     private EnemyDetection detection;
 
-    [SerializeField] private AttackDataSO attackData;
+    [SerializeField] private AttackDataSO meleeAttackData;
+    [SerializeField] private AttackDataSO rangeAttackData;
     [SerializeField] private float meleeAttackSpeed;
     [SerializeField] private float rangeAttackSpeed;
 
@@ -15,7 +16,7 @@ public class EnemyAttack : MonoBehaviour
     private float meleeTimer;
     private float rangeTimer;
 
-    public event Action PerformMeleeAttack;
+    public event Action<int> PerformMeleeAttack;
     public event Action<int> PerformRangeAttack;
 
     private void Awake() {
@@ -26,7 +27,7 @@ public class EnemyAttack : MonoBehaviour
         IsInMeleeRange = detection.IsInMeleeRange();
         IsInRangeRange = detection.IsInRangeRange();
         MeleeAttack();
-        RangeAttack();
+        //RangeAttack();
     }
 
     private void MeleeAttack() {
@@ -34,22 +35,22 @@ public class EnemyAttack : MonoBehaviour
             meleeTimer += Time.deltaTime;
             if (meleeTimer >= meleeAttackSpeed) {
                 meleeTimer = 0f;
-                PerformMeleeAttack?.Invoke();
+                PerformMeleeAttack?.Invoke(meleeAttackData.damage);
             }
         } else {
             meleeTimer = meleeAttackSpeed / 2;
         }
     }
 
-    private void RangeAttack() {
-        if (IsInRangeRange) {
-            rangeTimer += Time.deltaTime;
-            if (rangeTimer >= rangeAttackSpeed) {
-                rangeTimer = 0f;
-                PerformRangeAttack?.Invoke(attackData.damage);
-            }
-        } else {
-            rangeTimer = rangeAttackSpeed / 2;
-        }
-    }
+    //private void RangeAttack() {
+    //    if (IsInRangeRange) {
+    //        rangeTimer += Time.deltaTime;
+    //        if (rangeTimer >= rangeAttackSpeed) {
+    //            rangeTimer = 0f;
+    //            PerformRangeAttack?.Invoke(rangeAttackData.damage);
+    //        }
+    //    } else {
+    //        rangeTimer = rangeAttackSpeed / 2;
+    //    }
+    //}
 }

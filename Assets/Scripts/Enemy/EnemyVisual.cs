@@ -24,7 +24,7 @@ public class EnemyVisual : MonoBehaviour
         anim.SetTrigger("Range");
     }
 
-    private void EnemyAttack_PerformMeleeAttack() {
+    private void EnemyAttack_PerformMeleeAttack(int damag) {
         anim.SetTrigger("Melee");
     }
 }

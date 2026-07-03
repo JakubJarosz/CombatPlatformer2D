@@ -39,7 +39,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void HandleState() {
-        if (detection.IsInMeleeRange() || detection.IsInRangeRange()) {
+        if (detection.IsInMeleeRange() || detection.IsInRangeRange() || detection.IsInMeleeRange()) {
             state = EnemyState.Attack;
         } else if (detection.IsPlayerDetected()) {
             state = EnemyState.Walk;
