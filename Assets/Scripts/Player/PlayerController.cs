@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
     private SpriteRenderer playerSprite;
+    private Health playerHealth;
     private PlayerJump playerJump;
     private PlayerAttack playerAttack;
     private PlayerBlock playerBlock;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     // Event variables
     public event Action PerformJump;
     public event Action<bool> PerformBlock;
+    public event Action PerformParry;
     public event Action PerformAttack;
 
     private enum PlayerState {
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<Health>();
         playerJump = GetComponent<PlayerJump>();
         playerBlock = GetComponent<PlayerBlock>();
         playerAttack = GetComponent<PlayerAttack>();
@@ -47,6 +50,9 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         playerJump.JumpPerformed += PlayerJump_JumpPerformed;
         playerAttack.TryToAttack += PlayerAttack_TryToAttack;
+        playerAttack.EndAttack += PlayerAttack_EndAttack;
+        playerHealth.TriggerHurt += PlayerHealth_TriggerHurt;
+        playerHealth.Hit += PlayerHealth_Hit;
     }
 
     private void Update() {
@@ -74,7 +80,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleState() {
         previousState = currentState;
-        if (playerBlock.isBlocking && detection.IsGrounded() && playerAttack.isAttacking) {
+        if (currentState == PlayerState.Attack) return;
+        if (playerBlock.isBlocking && detection.IsGrounded()) {
             currentState = PlayerState.Block;
         } else if (!detection.IsGrounded()) {
             currentState = PlayerState.Air;
@@ -91,10 +98,7 @@ public class PlayerController : MonoBehaviour
     private void HandleStateChange() {
         bool IsBlocking = currentState == PlayerState.Block;
         PerformBlock?.Invoke(IsBlocking);
-        GetComponent<Health>().CanTakeDamage(!IsBlocking);
-        if (currentState == PlayerState.Attack) {
-            PerformAttack?.Invoke();
-        }
+        playerHealth.CanTakeDamage(!IsBlocking);
     }
 
     private void Movement() {
@@ -121,9 +125,25 @@ public class PlayerController : MonoBehaviour
     private void PlayerAttack_TryToAttack() {
         if (detection.IsGrounded()) {
             currentState = PlayerState.Attack;
+            playerAttack.StartAttack();
             PerformAttack?.Invoke();
         }
     }
+
+    private void PlayerAttack_EndAttack() {
+        currentState = PlayerState.Idle;
+    }
+
+    private void PlayerHealth_TriggerHurt() {
+        playerAttack.ResetCombo();
+    }
+
+    private void PlayerHealth_Hit() {
+        if (playerBlock.canParry) {
+            PerformParry?.Invoke();
+        }
+    }
+
 
     private void HandleBlock() {
         rb.linearVelocity = Vector2.zero;

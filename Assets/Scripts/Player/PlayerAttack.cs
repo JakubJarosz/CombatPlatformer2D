@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     private int comboCount;
 
     public event Action TryToAttack;
+    public event Action EndAttack;
 
     private void Start() {
         inputs.AttackPressed += Inputs_AttackPressed;
@@ -19,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Inputs_AttackPressed() {
         if (!isAttacking) {
-            TryAttacking();
+            TryToAttack?.Invoke();
             return;
         }
         if (canQueueAttack) {
@@ -30,17 +31,17 @@ public class PlayerAttack : MonoBehaviour
         ;
     }
 
-    private void TryAttacking() {
-        isAttacking = true;
-        attackInputValidated = false;
-        comboCount++;
-        TryToAttack?.Invoke();
-    }
-
-    private void ResetCombo() {
+    public void ResetCombo() {
         isAttacking = false;
         canQueueAttack = false;
         comboCount = 0;
+        EndAttack?.Invoke();
+    }
+
+    public void StartAttack() {
+        isAttacking = true;
+        attackInputValidated = false;
+        comboCount++;
     }
 
     public void CanQueueAttack() {
@@ -51,11 +52,13 @@ public class PlayerAttack : MonoBehaviour
         if (attackInputValidated) {
             if (comboCount == 3)
                 comboCount = 0;
-            TryAttacking();
+            StartAttack();
+            TryToAttack?.Invoke();
         } else {
             ResetCombo();
         }
     }
+
 
     //public int GetDamage() {
     //    return comboCount == 3 ? attackSO[1].damage : attackSO[0].damage;

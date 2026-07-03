@@ -417,6 +417,7 @@ GameObject:
   - component: {fileID: 316604202}
   - component: {fileID: 316604204}
   - component: {fileID: 316604203}
+  - component: {fileID: 316604205}
   m_Layer: 0
   m_Name: PlayerVisual
   m_TagString: Untagged
@@ -533,6 +534,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &316604205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316604200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f47b022e8288244eac6b863b1e4ba28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualEvents
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,8 +994,10 @@ GameObject:
   - component: {fileID: 901659328}
   - component: {fileID: 901659327}
   - component: {fileID: 901659325}
-  - component: {fileID: 901659326}
   - component: {fileID: 901659330}
+  - component: {fileID: 901659332}
+  - component: {fileID: 901659326}
+  - component: {fileID: 901659331}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1113,6 +1128,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   health: 100
   deathTimer: 5
+--- !u!114 &901659331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901659324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171c90cb8c193bc4b857f98bb40b4000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  inputs: {fileID: 1837713810}
+  attackDataSO: {fileID: 0}
+--- !u!114 &901659332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901659324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 971e163ba1bc00e4a932fcd4efbccb41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerBlock
+  inputs: {fileID: 1837713810}
+  parryWindowTimer: 0.2
 --- !u!1 &1134781785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,6 +1186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   playerController: {fileID: 901659325}
+  isPlayerDead: 0
 --- !u!4 &1134781787
 Transform:
   m_ObjectHideFlags: 0

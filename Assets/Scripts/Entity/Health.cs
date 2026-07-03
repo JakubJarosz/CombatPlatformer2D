@@ -9,10 +9,12 @@ public class Health : MonoBehaviour, IDamageable {
 
     public event Action TriggerDeath;
     public event Action TriggerHurt;
+    public event Action Hit;
 
     private bool canTakeDamage = true;
 
     public void TakeDamage(int damage) {
+        Hit?.Invoke();
         if (!canTakeDamage) return;
         health -= damage;
         if (health <= 0) {

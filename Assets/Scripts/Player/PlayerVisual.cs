@@ -16,9 +16,14 @@ public class PlayerVisual : MonoBehaviour {
 
     private void Start() {
         controller.PerformBlock += Controller_PerformBlock;
+        controller.PerformParry += Controller_PerformParry;
         controller.PerformAttack += Controller_PerformAttack;
         health.TriggerDeath += Health_TriggerDeath;
         health.TriggerHurt += Health_TriggerHurt;
+    }
+
+    private void Controller_PerformParry() {
+        anim.SetTrigger("Parry");
     }
 
     private void Controller_PerformAttack() {
