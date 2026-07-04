@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2301785285771410338}
   - component: {fileID: 8571750014312335672}
   - component: {fileID: 5593411290593904471}
-  - component: {fileID: 6430309610069035683}
+  - component: {fileID: -1644671549095341575}
   m_Layer: 10
   m_Name: Arrow
   m_TagString: Untagged
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &6430309610069035683
+--- !u!114 &-1644671549095341575
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,11 +176,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 875851877205252105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638de90709a0ff2429d45195245ce284, type: 3}
+  m_Script: {fileID: 11500000, guid: e2e7939632c072b4c9afef51ca703702, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  traverseSpeed: 20
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowProjectile
   projecitileDestroyTime: 1.5
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  traverseSpeed: 10

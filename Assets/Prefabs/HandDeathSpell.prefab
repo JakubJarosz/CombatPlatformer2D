@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7907339104494476148}
   - component: {fileID: 5730800701053013999}
   - component: {fileID: 7601544399130481531}
-  - component: {fileID: 7914884074482119448}
+  - component: {fileID: 7182132456845538083}
   m_Layer: 0
   m_Name: HandDeathSpell
   m_TagString: Untagged
@@ -70,7 +70,7 @@ CapsuleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2799373668957939561}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -181,7 +181,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7914884074482119448
+--- !u!114 &7182132456845538083
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,11 +190,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2799373668957939561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 638de90709a0ff2429d45195245ce284, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b9a2cf1f6d612c40b3f87d9e04b2fd6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  traverseSpeed: 0
-  projecitileDestroyTime: 0
+  m_EditorClassIdentifier: Assembly-CSharp::DeathHandProjectile
+  projecitileDestroyTime: 1.15
   playerLayer:
     serializedVersion: 2
     m_Bits: 64

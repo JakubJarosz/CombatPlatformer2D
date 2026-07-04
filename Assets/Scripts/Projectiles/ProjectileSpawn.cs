@@ -34,14 +34,14 @@ public class ProjectileSpawn : MonoBehaviour
         switch(spawnType) {
             case SpawnType.Static:
                 Vector2 posStat = (Vector2)transform.position + new Vector2(xOffset * detection.FacingDir(), yOffset);
-                Projectile projectileStat = Instantiate(projectilePrefab, posStat, Quaternion.identity).GetComponent<Projectile>();
+                ProjectileBase projectileStat = Instantiate(projectilePrefab, posStat, Quaternion.identity).GetComponent<ProjectileBase>();
                 projectileStat.SetFacing(detection.FacingDir());
                 projectileStat.SetDamage(attackDamage);
                 break;  
             case SpawnType.Tracking:
                 if (detection.IsPlayerDetected()) {
                     Vector2 posTrack = new Vector2(detection.GetDetectedPlayer().position.x, yOffset);
-                    Projectile projectileTrack = Instantiate(projectilePrefab, posTrack, Quaternion.identity).GetComponent<Projectile>();
+                    ProjectileBase projectileTrack = Instantiate(projectilePrefab, posTrack, Quaternion.identity).GetComponent<ProjectileBase>();
                     projectileTrack.SetDamage(attackDamage);
                 }
                 break;
