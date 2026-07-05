@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMeleeHitBox : MonoBehaviour
@@ -30,7 +31,16 @@ public class PlayerMeleeHitBox : MonoBehaviour
         foreach(Collider2D hit in hits) {
             IDamageable damage = hit.GetComponent<IDamageable>();
             if (damage != null) {
-                damage.TakeDamage(playerAttack.GetDamage());
+                // Apply damage
+                AttackDataSO attackData = playerAttack.GetCurrentAttackData();
+                damage.TakeDamage(attackData.damage);
+                AttackHitEffects hitEffects = hit.GetComponent<AttackHitEffects>();
+                // Apply effects if there are any
+                if (hitEffects != null) {
+                    float dir = Mathf.Sign(hit.transform.position.x - transform.parent.position.x);
+                    Vector2 knockbackDir = new Vector2(dir, attackData.knockbackYForce);
+                    hitEffects.ApplyEffects(knockbackDir, attackData.knockbackXForce, attackData.knockbackTime);
+                }
             }
         }
     }

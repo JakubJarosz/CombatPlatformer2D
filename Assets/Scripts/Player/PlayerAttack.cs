@@ -10,9 +10,11 @@ public class PlayerAttack : MonoBehaviour
     public bool isAttacking { get; private set; }
     private bool canQueueAttack;
     private bool attackInputValidated;
-    private int comboCount;
+    private int comboStep;
+    private AttackDataSO currentAttackData;
 
     public event Action TryToAttack;
+    public event Action RequestNextAttack;
     public event Action EndAttack;
 
     private void Start() {
@@ -34,14 +36,17 @@ public class PlayerAttack : MonoBehaviour
     public void ResetCombo() {
         isAttacking = false;
         canQueueAttack = false;
-        comboCount = 0;
+        comboStep = 0;
         EndAttack?.Invoke();
     }
 
     public void StartAttack() {
         isAttacking = true;
         attackInputValidated = false;
-        comboCount++;
+        comboStep++;
+        currentAttackData = GetAttackData();
+        if (comboStep > 3)
+            comboStep = 1;
     }
 
     public void CanQueueAttack() {
@@ -50,16 +55,17 @@ public class PlayerAttack : MonoBehaviour
 
     public void OnAttackFinish() {
         if (attackInputValidated) {
-            if (comboCount == 3)
-                comboCount = 0;
-            StartAttack();
-            TryToAttack?.Invoke();
+            RequestNextAttack?.Invoke();
         } else {
             ResetCombo();
         }
     }
 
-    public int GetDamage() {
-        return comboCount == 3 ? heavyMeleeSO.damage : lightMeleeSO.damage;
+    private AttackDataSO GetAttackData() {
+        return comboStep == 3 ? heavyMeleeSO : lightMeleeSO;
+    }
+
+    public AttackDataSO GetCurrentAttackData() {
+        return currentAttackData;
     }
 }

@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         playerJump.JumpPerformed += PlayerJump_JumpPerformed;
         playerAttack.TryToAttack += PlayerAttack_TryToAttack;
+        playerAttack.RequestNextAttack += PlayerAttack_RequestNextAttack;
         playerAttack.EndAttack += PlayerAttack_EndAttack;
         playerHealth.TriggerHurt += PlayerHealth_TriggerHurt;
         playerHealth.TriggerDeath += PlayerHealth_TriggerDeath;
@@ -126,6 +127,13 @@ public class PlayerController : MonoBehaviour
     private void PlayerAttack_TryToAttack() {
         if (detection.IsGrounded()) {
             currentState = PlayerState.Attack;
+            playerAttack.StartAttack();
+            PerformAttack?.Invoke();
+        }
+    }
+
+    private void PlayerAttack_RequestNextAttack() {
+        if (detection.IsGrounded()) {
             playerAttack.StartAttack();
             PerformAttack?.Invoke();
         }

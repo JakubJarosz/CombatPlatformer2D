@@ -24,7 +24,7 @@ public class Health : MonoBehaviour, IDamageable {
             TriggerHurt?.Invoke(hurtTimer);
             canTakeDamage = false;
             StartCoroutine(InviTimer());
-            Debug.Log(health);
+            //Debug.Log(health);
         }
     }
 

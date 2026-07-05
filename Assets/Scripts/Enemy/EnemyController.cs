@@ -1,30 +1,47 @@
+using System;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
-{
+public class EnemyController : MonoBehaviour {
     private Rigidbody2D rb;
     private SpriteRenderer enemySprite;
     private EnemyDetection detection;
+    private EnemyAttack enemyAttack;
+    private AttackHitEffects attackEffects;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
+
+    private bool isKnocked;
 
     private enum EnemyState {
         Idle,
         Walk,
         Attack,
+        Stunned
     }
 
     private EnemyState state;
 
+    public event Action PerformMeleeAttack;
+    public event Action PerformRangeAttack;
+
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        enemyAttack = GetComponent<EnemyAttack>();
+        attackEffects = GetComponent<AttackHitEffects>();
         enemySprite = GetComponentInChildren<SpriteRenderer>();
         detection = GetComponentInChildren<EnemyDetection>();
     }
 
+    private void Start() {
+        enemyAttack.PerformMeleeAttack += EnemyAttack_PerformMeleeAttack;
+        enemyAttack.PerformRangeAttack += EnemyAttack_PerformRangeAttack;
+        attackEffects.IsKnocked += AttackEffects_IsKnocked;
+    }
+
     private void Update() {
         HandleState();
+
         switch (state) {
             case EnemyState.Idle:
                 HandleIdle();
@@ -35,11 +52,19 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack:
                 HandleAttack();
                 break;
+            case EnemyState.Stunned:
+                HandleStunned();
+                break;
         }
     }
 
     private void HandleState() {
-        if (detection.IsInMeleeRange() || detection.IsInRangeRange() || detection.IsInMeleeRange()) {
+        if (isKnocked) {
+            state = EnemyState.Stunned;
+            return;
+        }
+
+        if (detection.IsInMeleeRange() || detection.IsInRangeRange()) {
             state = EnemyState.Attack;
         } else if (detection.IsPlayerDetected()) {
             state = EnemyState.Walk;
@@ -62,12 +87,30 @@ public class EnemyController : MonoBehaviour
         Flip();
     }
 
-    // Helper function
+    private void HandleStunned() {
+        
+    }
+
+    private void EnemyAttack_PerformRangeAttack(int obj) {
+        if (state == EnemyState.Attack) {
+            PerformRangeAttack?.Invoke();
+        }
+    }
+
+    private void EnemyAttack_PerformMeleeAttack(int obj) {
+        if (state == EnemyState.Attack) {
+            PerformMeleeAttack?.Invoke();
+        }
+    }
+
+    private void AttackEffects_IsKnocked(bool value) {
+        isKnocked = value;
+    }
+
     private void Flip() {
         enemySprite.flipX = detection.FacingDir() < 0;
     }
 
-    // Return function
     public bool IsWalking() {
         return state == EnemyState.Walk;
     }

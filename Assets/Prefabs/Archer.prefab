@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2593598240564450621, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: health
-      value: 100
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2593598240564450621, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: deathTimer

@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: HeavyMelee
   m_EditorClassIdentifier: Assembly-CSharp::AttackDataSO
   damage: 30
+  knockbackXForce: 4
+  knockbackYForce: 1
+  knockbackTime: 0.5

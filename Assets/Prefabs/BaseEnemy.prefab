@@ -62,8 +62,9 @@ GameObject:
   - component: {fileID: 6764675170986493803}
   - component: {fileID: 3405620429259551013}
   - component: {fileID: 5750892771525375308}
-  - component: {fileID: 2511241288573053122}
   - component: {fileID: 2593598240564450621}
+  - component: {fileID: 2511241288573053122}
+  - component: {fileID: 4815222111577955273}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -167,6 +168,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   moveSpeed: 0
+--- !u!114 &2593598240564450621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5029310898772674573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117dd65c232d0964c9e51bb1d36e70b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  health: 0
+  hurtTimer: 0
+  deathTimer: 0
 --- !u!114 &2511241288573053122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +199,7 @@ MonoBehaviour:
   rangeAttackData: {fileID: 0}
   meleeAttackSpeed: 0
   rangeAttackSpeed: 0
---- !u!114 &2593598240564450621
+--- !u!114 &4815222111577955273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,12 +208,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5029310898772674573}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 117dd65c232d0964c9e51bb1d36e70b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 46ae5e8ba636ac44d985ea8a973a1649, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  health: 0
-  hurtTimer: 0
-  deathTimer: 0
+  m_EditorClassIdentifier: Assembly-CSharp::AttackEffects
+  rb: {fileID: 6764675170986493803}
 --- !u!1 &5366234688627850962
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyVisualEvents
   projectile: {fileID: 1976244741851433358}
+  meleeHitBox: {fileID: 0}
 --- !u!1 &7793791126027434025
 GameObject:
   m_ObjectHideFlags: 0
