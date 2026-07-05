@@ -37,7 +37,8 @@ public class EnemyMeleeHitBox : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(meleePosition, attackRadius, targetLayer);
         if (hit == null) return;
         IDamageable damage = hit.GetComponent<IDamageable>();
-        if (damage != null) {
+        if (damage == null) return;
+        if (damage.CanTakeDamage()) {
             damage.TakeDamage(meleeDamage);
         }
     }

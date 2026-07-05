@@ -26,6 +26,10 @@ public class Health : MonoBehaviour, IDamageable {
         }
     }
 
+    public bool CanTakeDamage() {
+        return canTakeDamage;
+    }
+
     private void Death() {
         TriggerDeath?.Invoke();
         StartCoroutine(DeathDelay());

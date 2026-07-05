@@ -32,7 +32,8 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) {
         IDamageable hit = collision.GetComponent<IDamageable>();
-        if (hit != null) {
+        if (hit == null) return;
+        if (hit.CanTakeDamage()) {
             hit.TakeDamage(projectileDamage);
             OnProjectileHit();
         }

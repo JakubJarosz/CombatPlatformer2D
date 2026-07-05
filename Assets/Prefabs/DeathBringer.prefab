@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2593598240564450621, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: deathTimer
-      value: 4
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3357580205275418072, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: meleeHitBox
