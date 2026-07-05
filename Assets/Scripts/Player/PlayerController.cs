@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private float moveInputs;
     public float facingDir { get; private set; }
 
+    private bool isInvincible;
+
     // Event variables
     public event Action PerformJump;
     public event Action<bool> PerformBlock;
@@ -101,7 +103,9 @@ public class PlayerController : MonoBehaviour
     private void HandleStateChange() {
         bool IsBlocking = currentState == PlayerState.Block;
         PerformBlock?.Invoke(IsBlocking);
-        playerHealth.CanTakeDamage(!IsBlocking);
+        if (!isInvincible) {
+            playerHealth.CanTakeDamage(!IsBlocking);
+        }
     }
 
     private void Movement() {
@@ -150,15 +154,15 @@ public class PlayerController : MonoBehaviour
         if (invEff != null) {
             invEff.StartInvFrames(playerSprite, hurtTime);
             playerHealth.CanTakeDamage(false);
-            gameObject.layer = LayerMask.NameToLayer("Dead");
+            isInvincible = true;
             StartCoroutine(InviTimer(hurtTime));
         }
     }
 
     private IEnumerator InviTimer(float hurtTime) {
         yield return new WaitForSeconds(hurtTime);
+        isInvincible = false;
         playerHealth.CanTakeDamage(true);
-        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     private void PlayerHealth_Hit() {
