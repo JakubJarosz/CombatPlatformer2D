@@ -8,8 +8,16 @@ public class AttackDataSO : ScriptableObject
     public int damage;
     public int staggerDamage;
 
-    [Header("Knockback Effects")]
+    [Header("Knockback Effect")]
     public float knockbackXForce;
     public float knockbackYForce;
     public float knockbackTime;
+
+    [Header("Hitstop Effect")]
+    public float hitstopTime;
+
+    [Header("Camera shake")]
+    public float cameraShakeTime;
+    public float cameraShakeStrength;
+
 }

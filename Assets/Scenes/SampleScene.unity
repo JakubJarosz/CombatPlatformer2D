@@ -658,7 +658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 646970981}
   - component: {fileID: 646970982}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: MeleeHitBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -713,6 +713,7 @@ GameObject:
   - component: {fileID: 901659326}
   - component: {fileID: 901659331}
   - component: {fileID: 901659333}
+  - component: {fileID: 901659334}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -843,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   health: 1000
-  hurtTimer: 0
+  hurtTimer: 3
   deathTimer: 5
 --- !u!114 &901659331
 MonoBehaviour:
@@ -886,6 +887,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ae5e8ba636ac44d985ea8a973a1649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackEffects
+--- !u!114 &901659334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901659324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7afa2a93337cbf2419917f2bb8f800b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InvincibilityEffect
 --- !u!1 &1134781785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1066,7 +1079,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6495995866071850795, guid: 1598a4f7c9dc1b842a128da90131a2c8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1171,7 +1184,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1194237961898999629, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687189682497651415, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687189682497651415, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3687189682497651415, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8611095936613932930, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
       propertyPath: meleeAttackSpeed

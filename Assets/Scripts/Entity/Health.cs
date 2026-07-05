@@ -22,9 +22,7 @@ public class Health : MonoBehaviour, IDamageable {
             Death();
         } else {
             TriggerHurt?.Invoke(hurtTimer);
-            canTakeDamage = false;
-            StartCoroutine(InviTimer());
-            //Debug.Log(health);
+            Debug.Log(health);
         }
     }
 
@@ -36,11 +34,6 @@ public class Health : MonoBehaviour, IDamageable {
     private IEnumerator DeathDelay() {
         yield return new WaitForSeconds(deathTimer);
         Destroy(gameObject);
-    }
-
-    private IEnumerator InviTimer() {
-        yield return new WaitForSeconds(hurtTimer);
-        canTakeDamage = true;
     }
 
     public void CanTakeDamage(bool canTake) {

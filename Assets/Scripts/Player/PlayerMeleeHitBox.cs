@@ -42,9 +42,18 @@ public class PlayerMeleeHitBox : MonoBehaviour
                 // Apply effects if there are any
                 AttackHitEffects hitEffects = hit.GetComponent<AttackHitEffects>();
                 if (hitEffects != null) {
+                    // Knockback
                     float dir = Mathf.Sign(hit.transform.position.x - transform.parent.position.x);
                     Vector2 knockbackDir = new Vector2(dir, attackData.knockbackYForce);
-                    hitEffects.ApplyEffects(knockbackDir, attackData.knockbackXForce, attackData.knockbackTime);
+
+                    hitEffects.ApplyEffects(
+                        knockbackDir, 
+                        attackData.knockbackXForce, 
+                        attackData.knockbackTime, 
+                        attackData.hitstopTime,
+                        attackData.cameraShakeTime,
+                        attackData.cameraShakeStrength
+                        );
                 }
             }
         }

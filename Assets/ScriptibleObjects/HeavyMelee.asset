@@ -17,3 +17,6 @@ MonoBehaviour:
   knockbackXForce: 4
   knockbackYForce: 0.3
   knockbackTime: 0.5
+  hitstopTime: 0.2
+  cameraShakeTime: 0.1
+  cameraShakeStrength: 0.02

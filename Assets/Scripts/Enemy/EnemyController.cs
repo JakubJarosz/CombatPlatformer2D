@@ -113,6 +113,7 @@ public class EnemyController : MonoBehaviour {
     }
 
     private void Health_TriggerDeath() {
+        gameObject.layer = LayerMask.NameToLayer("Dead");
         isDead = true;
     }
 

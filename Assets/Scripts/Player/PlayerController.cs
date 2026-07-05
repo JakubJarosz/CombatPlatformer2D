@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -145,6 +146,19 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerHealth_TriggerHurt(float hurtTime) {
         playerAttack.ResetCombo();
+        InvincibilityEffect invEff = GetComponent<InvincibilityEffect>();
+        if (invEff != null) {
+            invEff.StartInvFrames(playerSprite, hurtTime);
+            playerHealth.CanTakeDamage(false);
+            gameObject.layer = LayerMask.NameToLayer("Dead");
+            StartCoroutine(InviTimer(hurtTime));
+        }
+    }
+
+    private IEnumerator InviTimer(float hurtTime) {
+        yield return new WaitForSeconds(hurtTime);
+        playerHealth.CanTakeDamage(true);
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     private void PlayerHealth_Hit() {
