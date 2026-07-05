@@ -91,13 +91,13 @@ public class EnemyController : MonoBehaviour {
         
     }
 
-    private void EnemyAttack_PerformRangeAttack(int obj) {
+    private void EnemyAttack_PerformRangeAttack(AttackDataSO obj) {
         if (state == EnemyState.Attack) {
             PerformRangeAttack?.Invoke();
         }
     }
 
-    private void EnemyAttack_PerformMeleeAttack(int obj) {
+    private void EnemyAttack_PerformMeleeAttack(AttackDataSO obj) {
         if (state == EnemyState.Attack) {
             PerformMeleeAttack?.Invoke();
         }

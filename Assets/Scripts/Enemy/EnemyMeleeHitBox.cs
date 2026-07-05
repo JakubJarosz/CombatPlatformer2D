@@ -19,8 +19,8 @@ public class EnemyMeleeHitBox : MonoBehaviour
         enemyAttack.PerformMeleeAttack += EnemyAttack_PerformMeleeAttack;
     }
 
-    private void EnemyAttack_PerformMeleeAttack(int obj) {
-        meleeDamage = obj;
+    private void EnemyAttack_PerformMeleeAttack(AttackDataSO obj) {
+        meleeDamage = obj.damage;
     }
 
     private void OnDrawGizmos() {

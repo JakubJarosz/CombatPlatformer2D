@@ -26,8 +26,8 @@ public class ProjectileSpawn : MonoBehaviour
         enemyAttack.PerformRangeAttack += GetAttackDamage;
     }
 
-    private void GetAttackDamage(int obj) {
-        attackDamage = obj;
+    private void GetAttackDamage(AttackDataSO obj) {
+        attackDamage = obj.damage;
     }
 
     public void SpawnProjectile() {

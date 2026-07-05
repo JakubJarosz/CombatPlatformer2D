@@ -1026,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4897312836355176319, guid: 1598a4f7c9dc1b842a128da90131a2c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.25
+      value: -4.45
       objectReference: {fileID: 0}
     - target: {fileID: 4897312836355176319, guid: 1598a4f7c9dc1b842a128da90131a2c8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1066,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6495995866071850795, guid: 1598a4f7c9dc1b842a128da90131a2c8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1171,7 +1171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1194237961898999629, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8611095936613932930, guid: 2e7211ed9e433b4439720863fb0ff496, type: 3}
       propertyPath: meleeAttackSpeed

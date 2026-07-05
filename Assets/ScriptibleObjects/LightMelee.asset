@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: LightMelee
   m_EditorClassIdentifier: Assembly-CSharp::AttackDataSO
   damage: 15
+  staggerDamage: 100
+  knockbackXForce: 0
+  knockbackYForce: 0
+  knockbackTime: 0

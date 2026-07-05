@@ -34,8 +34,13 @@ public class PlayerMeleeHitBox : MonoBehaviour
                 // Apply damage
                 AttackDataSO attackData = playerAttack.GetCurrentAttackData();
                 damage.TakeDamage(attackData.damage);
-                AttackHitEffects hitEffects = hit.GetComponent<AttackHitEffects>();
+
+                // Apply stagger
+                Stagger stagger = hit.GetComponent<Stagger>();
+                stagger.DealStaggerDamage(attackData.staggerDamage);
+
                 // Apply effects if there are any
+                AttackHitEffects hitEffects = hit.GetComponent<AttackHitEffects>();
                 if (hitEffects != null) {
                     float dir = Mathf.Sign(hit.transform.position.x - transform.parent.position.x);
                     Vector2 knockbackDir = new Vector2(dir, attackData.knockbackYForce);

@@ -144,6 +144,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6764675170986493803, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: m_Mass
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7382242014745343383, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Size.x
       value: 1.3125
@@ -164,6 +168,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5029310898772674573, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8986124074486225214}
     - targetCorrespondingSourceObject: {fileID: 7793791126027434025, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5770453939211381594}
@@ -179,6 +186,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2094a1583e5d240bac79c54e9a1d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
+--- !u!1 &6495995866071850795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5029310898772674573, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+  m_PrefabInstance: {fileID: 2300735017925924646}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8986124074486225214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6495995866071850795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d963bf6eb3eeab644868d306ef55c137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Stagger
+  staggerCount: 500
 --- !u!1 &8342005661259935503 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7793791126027434025, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}

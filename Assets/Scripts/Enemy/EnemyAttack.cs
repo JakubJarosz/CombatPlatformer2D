@@ -16,8 +16,8 @@ public class EnemyAttack : MonoBehaviour
     private float meleeTimer;
     private float rangeTimer;
 
-    public event Action<int> PerformMeleeAttack;
-    public event Action<int> PerformRangeAttack;
+    public event Action<AttackDataSO> PerformMeleeAttack;
+    public event Action<AttackDataSO> PerformRangeAttack;
 
     private void Awake() {
         detection = GetComponentInChildren<EnemyDetection>();
@@ -35,7 +35,7 @@ public class EnemyAttack : MonoBehaviour
             meleeTimer += Time.deltaTime;
             if (meleeTimer >= meleeAttackSpeed) {
                 meleeTimer = 0f;
-                PerformMeleeAttack?.Invoke(meleeAttackData.damage);
+                PerformMeleeAttack?.Invoke(meleeAttackData);
             }
         } else {
             meleeTimer = meleeAttackSpeed / 2;
@@ -47,10 +47,16 @@ public class EnemyAttack : MonoBehaviour
             rangeTimer += Time.deltaTime;
             if (rangeTimer >= rangeAttackSpeed) {
                 rangeTimer = 0f;
-                PerformRangeAttack?.Invoke(rangeAttackData.damage);
+                PerformRangeAttack?.Invoke(rangeAttackData);
             }
         } else {
             rangeTimer = rangeAttackSpeed / 2;
         }
+    }
+
+    // Used for stagger logic
+    public void Stagger() {
+        meleeTimer = 0f;
+        rangeTimer = 0f;
     }
 }
