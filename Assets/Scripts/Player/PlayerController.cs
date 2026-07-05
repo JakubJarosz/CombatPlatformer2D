@@ -155,6 +155,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerHealth_TriggerDeath() {
         gameObject.layer = LayerMask.NameToLayer("Dead");
+        gameInput.DisableAllInputs();
     }
 
     private void HandleBlock() {

@@ -2,16 +2,19 @@ using System;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
+
     private Rigidbody2D rb;
     private SpriteRenderer enemySprite;
     private EnemyDetection detection;
     private EnemyAttack enemyAttack;
+    private Health health;
     private AttackHitEffects attackEffects;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
 
     private bool isKnocked;
+    private bool isDead;
 
     private enum EnemyState {
         Idle,
@@ -29,6 +32,7 @@ public class EnemyController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         enemyAttack = GetComponent<EnemyAttack>();
         attackEffects = GetComponent<AttackHitEffects>();
+        health = GetComponent<Health>();
         enemySprite = GetComponentInChildren<SpriteRenderer>();
         detection = GetComponentInChildren<EnemyDetection>();
     }
@@ -36,6 +40,7 @@ public class EnemyController : MonoBehaviour {
     private void Start() {
         enemyAttack.PerformMeleeAttack += EnemyAttack_PerformMeleeAttack;
         enemyAttack.PerformRangeAttack += EnemyAttack_PerformRangeAttack;
+        health.TriggerDeath += Health_TriggerDeath;
         attackEffects.IsKnocked += AttackEffects_IsKnocked;
     }
 
@@ -59,7 +64,7 @@ public class EnemyController : MonoBehaviour {
     }
 
     private void HandleState() {
-        if (isKnocked) {
+        if (isKnocked || isDead) {
             state = EnemyState.Stunned;
             return;
         }
@@ -105,6 +110,10 @@ public class EnemyController : MonoBehaviour {
 
     private void AttackEffects_IsKnocked(bool value) {
         isKnocked = value;
+    }
+
+    private void Health_TriggerDeath() {
+        isDead = true;
     }
 
     private void Flip() {

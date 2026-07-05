@@ -21,4 +21,8 @@ public class GameInputs : MonoBehaviour
     public float GetMoveInput() {
         return inputActions.Player.Move.ReadValue<float>();
     }
+
+    public void DisableAllInputs() {
+        inputActions.Disable();
+    }
 }
