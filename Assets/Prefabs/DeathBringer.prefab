@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1976244741851433358, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: yOffset
-      value: -4.44
+      value: -3.88
       objectReference: {fileID: 0}
     - target: {fileID: 1976244741851433358, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: spawnType
@@ -34,19 +34,19 @@ PrefabInstance:
       objectReference: {fileID: 2799373668957939561, guid: fe9851026b857a24095f076eec20b514, type: 3}
     - target: {fileID: 2509152807087315684, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Size.x
-      value: 0.7066393
+      value: 1.5469781
       objectReference: {fileID: 0}
     - target: {fileID: 2509152807087315684, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Size.y
-      value: 1.6405821
+      value: 3.2659745
       objectReference: {fileID: 0}
     - target: {fileID: 2509152807087315684, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Offset.x
-      value: 0.00000047683716
+      value: -0.011056602
       objectReference: {fileID: 0}
     - target: {fileID: 2509152807087315684, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Offset.y
-      value: 0.8575535
+      value: 1.6702497
       objectReference: {fileID: 0}
     - target: {fileID: 2511241288573053122, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: meleeAttackData
@@ -76,6 +76,22 @@ PrefabInstance:
       propertyPath: meleeHitBox
       value: 
       objectReference: {fileID: 5770453939211381594}
+    - target: {fileID: 3405620429259551013, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: m_Size.x
+      value: 1.5913062
+      objectReference: {fileID: 0}
+    - target: {fileID: 3405620429259551013, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: m_Size.y
+      value: 3.3545802
+      objectReference: {fileID: 0}
+    - target: {fileID: 3405620429259551013, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0061712265
+      objectReference: {fileID: 0}
+    - target: {fileID: 3405620429259551013, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.6994652
+      objectReference: {fileID: 0}
     - target: {fileID: 4280531386542345420, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -94,15 +110,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5476141155310149766, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.07
+      value: 1.96
       objectReference: {fileID: 0}
     - target: {fileID: 5476141155310149766, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.77
+      value: 1.63
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: meleeSize.x
-      value: 4.3
+      value: 7.65
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: meleeSize.y
@@ -253,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d55a976809e8bd4f84d2aab783c94fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeHitBox
-  attackRadius: 1.1
+  attackRadius: 2.05
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
