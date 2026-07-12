@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Attack")]
 public class AttackDataSO : ScriptableObject
 {
     [Header("Damage stats")]
