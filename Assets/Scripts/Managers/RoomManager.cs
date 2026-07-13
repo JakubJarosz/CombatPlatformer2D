@@ -1,3 +1,5 @@
+using Cinemachine;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,11 +10,16 @@ public class RoomManager : MonoBehaviour
     [SerializeField] private RoomGraphSO roomGraph;
     [SerializeField] private Room startingRoom;
 
+    private CinemachineConfiner2D confiner;
+
     private Dictionary<RoomName, Room> rooms = new ();
     private Room currentRoom;
 
+    public event Action playerLeftTheRoom;
+
     private void Awake() {
         instance = this;
+        confiner = FindFirstObjectByType<CinemachineConfiner2D>();
 
         // Cashing Rooms in Dictionary due to having only RoomName
         Room[] allRooms = FindObjectsByType<Room>(FindObjectsSortMode.None);
@@ -24,10 +31,17 @@ public class RoomManager : MonoBehaviour
     }
 
    
-    public void Transition(TransitionDirection dir) {
+    public void Transition(TransitionDirection dir, Transform player) {
         RoomConnection connection = roomGraph.FindConnection(currentRoom.GetRoomName(), dir);
         if (connection == null) return;
 
-        //currentRoom = connection.
+        playerLeftTheRoom?.Invoke();
+        currentRoom = rooms[connection.toRoom];
+        // Moving the Player to connected room
+        Transform spawnLocation = currentRoom.GetEntryPoint(connection.toDirection);
+        player.position = spawnLocation.position;
+
+        // Moving camera bound
+        confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
     }
 }

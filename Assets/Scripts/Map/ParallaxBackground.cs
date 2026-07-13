@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
@@ -5,15 +6,22 @@ public class ParallaxBackground : MonoBehaviour
     [SerializeField] private Vector2 parallaxEffectMultiplier;
 
     private Transform cameraTransform;
+    private Vector3 originalSpritePosition;
     private Vector3 lastCameraPosition;
     private float textureUnitSizeX;
 
     private void Start() {
         cameraTransform = Camera.main.transform;
+        originalSpritePosition = transform.position;
         lastCameraPosition = cameraTransform.position;
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;
         textureUnitSizeX = texture.width / sprite.pixelsPerUnit;
+        RoomManager.instance.playerLeftTheRoom += Instance_playerLeftTheRoom;
+    }
+
+    private void Instance_playerLeftTheRoom() {
+        transform.position = originalSpritePosition;
     }
 
     private void LateUpdate() {

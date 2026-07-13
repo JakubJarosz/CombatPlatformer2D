@@ -9,4 +9,16 @@ public class Room : MonoBehaviour
     public RoomName GetRoomName() {
         return roomDataSO.roomName;
     }
+
+    public Transform GetEntryPoint(TransitionDirection dir) {
+        foreach (var entryPoint in entryPoints) {
+            if (entryPoint.direction == dir) 
+                return entryPoint.point;
+        }
+        return null;
+    }
+
+    public PolygonCollider2D GetCameraBounds() {
+        return roomBounds;
+    }
 }
