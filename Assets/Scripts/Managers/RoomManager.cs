@@ -13,7 +13,7 @@ public class RoomManager : MonoBehaviour
     private CinemachineConfiner2D confiner;
 
     private Dictionary<RoomName, Room> rooms = new ();
-    private Room currentRoom;
+    public Room currentRoom { get; private set; }
 
     public event Action playerLeftTheRoom;
 
@@ -30,14 +30,13 @@ public class RoomManager : MonoBehaviour
         currentRoom = startingRoom;
     }
 
-   
     public void Transition(TransitionDirection dir, Transform player) {
         RoomConnection connection = roomGraph.FindConnection(currentRoom.GetRoomName(), dir);
         if (connection == null) return;
 
         playerLeftTheRoom?.Invoke();
         currentRoom = rooms[connection.toRoom];
-        // Moving the Player to connected room
+        // Moving the Player to connected belongRoom
         Transform spawnLocation = currentRoom.GetEntryPoint(connection.toDirection);
         player.position = spawnLocation.position;
 

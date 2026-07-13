@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public float facingDir { get; private set; }
 
     private bool isInvincible;
+    private bool isTransitioning;
 
     // Event variables
     public event Action PerformJump;
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour
         Walk,
         Air,
         Attack,
-        Block
+        Block,
+        Transition,
     }
 
     private PlayerState currentState;
@@ -80,11 +82,18 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Block:
                 HandleBlock();
                 break;
+            case PlayerState.Transition:
+                HandleTransition();
+                break;
         }
     }
 
     private void HandleState() {
         previousState = currentState;
+        if (isTransitioning) {
+            currentState = PlayerState.Transition;
+            return;
+        }
         if (currentState == PlayerState.Attack) return;
         if (playerBlock.isBlocking && detection.IsGrounded()) {
             currentState = PlayerState.Block;
@@ -109,6 +118,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Movement() {
+        if (currentState == PlayerState.Transition) return;
         rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -123,13 +133,24 @@ public class PlayerController : MonoBehaviour
     private void HandleAir() {
         Flip();
     }
+
+    private void HandleBlock() {
+        rb.linearVelocity = Vector2.zero;
+    }
+
+    private void HandleTransition() {
+
+    }
+
     // Event functions
     private void PlayerJump_JumpPerformed() {
+        if (currentState == PlayerState.Transition) return;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         PerformJump?.Invoke();
     }
 
     private void PlayerAttack_TryToAttack() {
+        if (currentState == PlayerState.Transition) return;
         if (detection.IsGrounded()) {
             currentState = PlayerState.Attack;
             playerAttack.StartAttack();
@@ -176,10 +197,6 @@ public class PlayerController : MonoBehaviour
         gameInput.DisableAllInputs();
     }
 
-    private void HandleBlock() {
-        rb.linearVelocity = Vector2.zero;
-    }
-
     // Helper functions
     private void Flip() {
         if (moveInputs == 0) return;
@@ -195,5 +212,11 @@ public class PlayerController : MonoBehaviour
 
     public float GetYVelocity() {
         return rb.linearVelocity.y;
+    }
+
+    public void StartTransition(float dir) {
+        isTransitioning = true;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(dir * moveSpeed, rb.linearVelocity.y);
     }
 }

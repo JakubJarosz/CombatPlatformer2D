@@ -5,10 +5,16 @@ public class ParallaxBackground : MonoBehaviour
 {
     [SerializeField] private Vector2 parallaxEffectMultiplier;
 
+    private Room belongRoom;
+
     private Transform cameraTransform;
     private Vector3 originalSpritePosition;
     private Vector3 lastCameraPosition;
     private float textureUnitSizeX;
+
+    private void Awake() {
+        belongRoom = GetComponentInParent<Room>();
+    }
 
     private void Start() {
         cameraTransform = Camera.main.transform;
@@ -25,6 +31,7 @@ public class ParallaxBackground : MonoBehaviour
     }
 
     private void LateUpdate() {
+        if (belongRoom != RoomManager.instance.currentRoom) return;
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
         transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x,
            deltaMovement.y * parallaxEffectMultiplier.y,
