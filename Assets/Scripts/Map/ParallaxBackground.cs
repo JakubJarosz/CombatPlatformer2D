@@ -31,7 +31,7 @@ public class ParallaxBackground : MonoBehaviour
     }
 
     private void LateUpdate() {
-        if (belongRoom != RoomManager.instance.currentRoom) return;
+        if (belongRoom != RoomManager.instance.currentRoom) return; // Follow only the room the background belongs to 
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
         transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x,
            deltaMovement.y * parallaxEffectMultiplier.y,
