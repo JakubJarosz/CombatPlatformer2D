@@ -28,21 +28,20 @@ public class ParallaxBackground : MonoBehaviour
 
     private void Instance_playerLeftTheRoom() {
         transform.position = originalSpritePosition;
+        lastCameraPosition = cameraTransform.position;
     }
 
     private void LateUpdate() {
-        if (belongRoom != RoomManager.instance.currentRoom) return; // Follow only the room the background belongs to 
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-        transform.position += new Vector3(deltaMovement.x * parallaxEffectMultiplier.x,
-           deltaMovement.y * parallaxEffectMultiplier.y,
-           0f);
+
+        if (belongRoom == RoomManager.instance.currentRoom) {
+            transform.position += new Vector3(
+                deltaMovement.x * parallaxEffectMultiplier.x,
+                deltaMovement.y * parallaxEffectMultiplier.y,
+                0f);
+        }
+
+        
         lastCameraPosition = cameraTransform.position;
-
-        // Infinite scrolling
-
-        //if (Mathf.Abs(cameraTransform.position.x - transform.position.x) >= textureUnitSizeX) {
-        //    float offsetPositionX = (cameraTransform.position.x - transform.position.x) % textureUnitSizeX;
-        //    transform.position = new Vector3(cameraTransform.position.x + offsetPositionX, transform.position.y, 0f);
-        //}
     }
 }

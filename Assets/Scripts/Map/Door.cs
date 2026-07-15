@@ -22,7 +22,8 @@ public class Door : MonoBehaviour
     }
 
     private void UpdateChildPositioning() {
-        entryPoint.localPosition = entryOffset * SetDirectionOffset();
+        // + Vector to position entry a little lower so the Player does not spawn in the air
+        entryPoint.localPosition = (entryOffset * SetDirectionOffset()) + new Vector2(0f, -1.1f);
         exitPoint.localPosition = Vector3.zero;
     }
 
@@ -50,7 +51,6 @@ public class Door : MonoBehaviour
     }
 
     public void HandleTriggerExit(Transform player) {
-        float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
         RoomManager.instance.Transition(dir, player);
     }
    

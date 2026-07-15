@@ -10,6 +10,7 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] private RoomGraphSO roomGraph;
     [SerializeField] private Room startingRoom;
+    [SerializeField] private FadeAwayEffect fadeEffect;
 
     private CinemachineConfiner2D confiner;
 
@@ -36,33 +37,34 @@ public class RoomManager : MonoBehaviour
         if (connection == null) return;
         currentRoom = rooms[connection.toRoom];
         Transform spawnLocation = currentRoom.GetEntryPoint(connection.toDirection);
-        Debug.Log(spawnLocation);
+
+        //Start transition
         StartCoroutine(TransitionCoroutine(dir, player, spawnLocation));
-
-
-        // Moving camera bound
-        confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
     }
 
     private IEnumerator TransitionCoroutine(TransitionDirection dir, Transform player, Transform spawnLocation) {
         float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
         PlayerController controller = player.GetComponent<PlayerController>();
+        float timer = 1f; // timer for fading in and out screen as well as for how long the player moves automaticly
 
-        // Start Moving in the correct direction (still in the original room)
+        // Start Moving in the correct direction (still in the original room) and fade in the screen
         controller.StartTransition(dirNumb);
-        yield return new WaitForSeconds(1f);
+        StartCoroutine(fadeEffect.FadeIn(timer));
 
-        // After a sec teleport player to new Room
+        yield return new WaitForSeconds(timer + 0.2f);
+   
+        // After a sec teleport player to new Room and change the camera bound
         player.position = spawnLocation.position;
         controller.MidTransition();
-        playerLeftTheRoom?.Invoke();
-
+        confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
+        playerLeftTheRoom?.Invoke(); // fix the background
         // Player in new room logic
-        StartCoroutine(NewRoomCoroutine(controller));
+        StartCoroutine(NewRoomCoroutine(controller, timer));
     }
 
-    private IEnumerator NewRoomCoroutine(PlayerController controller) {
-        yield return new WaitForSeconds(1f);
+    private IEnumerator NewRoomCoroutine(PlayerController controller, float timer) {
+        StartCoroutine(fadeEffect.FadeOut(timer));
+        yield return new WaitForSeconds(timer);
         controller.EndTransition();
     }
 }

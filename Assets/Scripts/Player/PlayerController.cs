@@ -65,7 +65,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update() {
-        moveInputs = gameInput.GetMoveInput();
+        if (!isTransitioning) {
+            moveInputs = gameInput.GetMoveInput();
+        } 
+
         HandleState();
         Movement();
         MovePlayerDuringTransition();
@@ -120,7 +123,6 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Movement() {
-        if (currentState == PlayerState.Transition) return;
         rb.linearVelocity = new Vector2(moveInputs * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -226,6 +228,7 @@ public class PlayerController : MonoBehaviour
     private void MovePlayerDuringTransition() {
         if (!isTransitioning) return;
         rb.linearVelocity = new Vector2(transitionDir * moveSpeed, rb.linearVelocity.y);
+        moveInputs = 1;
     }
 
     public void MidTransition() {
