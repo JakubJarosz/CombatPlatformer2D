@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviour
     private Dictionary<RoomName, Room> rooms = new ();
     public Room currentRoom { get; private set; }
 
-    public event Action playerLeftTheRoom;
+    public event Action<Room> roomEntered;
 
     private void Awake() {
         instance = this;
@@ -57,7 +57,7 @@ public class RoomManager : MonoBehaviour
         player.position = spawnLocation.position;
         controller.MidTransition();
         confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
-        playerLeftTheRoom?.Invoke(); // fix the background
+        roomEntered?.Invoke(currentRoom); // fix the background
         // Player in new room logic
         StartCoroutine(NewRoomCoroutine(controller, timer));
     }
