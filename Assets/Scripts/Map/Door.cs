@@ -11,7 +11,7 @@ public class Door : MonoBehaviour
     private Transform entryPoint;
     private Transform exitPoint;
 
-    private float entryOffset = 2f;
+    private float entryOffset = 1.3f;
     
     private void OnValidate() {
         col = GetComponentInChildren<BoxCollider2D>();
@@ -49,13 +49,10 @@ public class Door : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.GetComponentInParent<PlayerController>() != null) {
-            Transform player = collision.transform;
-            RoomManager.instance.Transition(dir, player);
-        }
+    public void HandleTriggerExit(Transform player) {
+        float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
+        RoomManager.instance.Transition(dir, player);
     }
-
    
 }
 

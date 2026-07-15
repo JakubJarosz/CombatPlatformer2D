@@ -1,5 +1,6 @@
 using Cinemachine;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,14 +34,35 @@ public class RoomManager : MonoBehaviour
     public void Transition(TransitionDirection dir, Transform player) {
         RoomConnection connection = roomGraph.FindConnection(currentRoom.GetRoomName(), dir);
         if (connection == null) return;
-
-        playerLeftTheRoom?.Invoke();
         currentRoom = rooms[connection.toRoom];
-        // Moving the Player to connected belongRoom
         Transform spawnLocation = currentRoom.GetEntryPoint(connection.toDirection);
-        player.position = spawnLocation.position;
+        Debug.Log(spawnLocation);
+        StartCoroutine(TransitionCoroutine(dir, player, spawnLocation));
+
 
         // Moving camera bound
         confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
+    }
+
+    private IEnumerator TransitionCoroutine(TransitionDirection dir, Transform player, Transform spawnLocation) {
+        float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
+        PlayerController controller = player.GetComponent<PlayerController>();
+
+        // Start Moving in the correct direction (still in the original room)
+        controller.StartTransition(dirNumb);
+        yield return new WaitForSeconds(1f);
+
+        // After a sec teleport player to new Room
+        player.position = spawnLocation.position;
+        controller.MidTransition();
+        playerLeftTheRoom?.Invoke();
+
+        // Player in new room logic
+        StartCoroutine(NewRoomCoroutine(controller));
+    }
+
+    private IEnumerator NewRoomCoroutine(PlayerController controller) {
+        yield return new WaitForSeconds(1f);
+        controller.EndTransition();
     }
 }

@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isInvincible;
     private bool isTransitioning;
+    private float transitionDir;
 
     // Event variables
     public event Action PerformJump;
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
         moveInputs = gameInput.GetMoveInput();
         HandleState();
         Movement();
+        MovePlayerDuringTransition();
         switch (currentState) {
             case PlayerState.Idle:
                 break;
@@ -214,9 +216,23 @@ public class PlayerController : MonoBehaviour
         return rb.linearVelocity.y;
     }
 
+    // Used in TransitionRoom inside RoomManager
     public void StartTransition(float dir) {
         isTransitioning = true;
         rb.gravityScale = 0f;
-        rb.linearVelocity = new Vector2(dir * moveSpeed, rb.linearVelocity.y);
+        transitionDir = dir;
+    }
+
+    private void MovePlayerDuringTransition() {
+        if (!isTransitioning) return;
+        rb.linearVelocity = new Vector2(transitionDir * moveSpeed, rb.linearVelocity.y);
+    }
+
+    public void MidTransition() {
+        rb.gravityScale = 1f;
+    }
+
+    public void EndTransition() {
+        isTransitioning = false;
     }
 }
