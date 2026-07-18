@@ -36,15 +36,15 @@ public class RoomManager : MonoBehaviour
     public void Transition(TransitionDirection dir, Transform player) {
         RoomConnection connection = roomGraph.FindConnection(currentRoom.GetRoomName(), dir);
         if (connection == null) return;
-        currentRoom = rooms[connection.toRoom];
+       
         Room targetRoom = rooms[connection.toRoom];
-        Transform spawnLocation = currentRoom.GetEntryPoint(connection.toDirection);
+        Transform spawnLocation = targetRoom.GetEntryPoint(connection.toDirection);
 
         //Start transition
-        StartCoroutine(TransitionCoroutine(dir, player, spawnLocation));
+        StartCoroutine(TransitionCoroutine(dir, player, spawnLocation, targetRoom));
     }
 
-    private IEnumerator TransitionCoroutine(TransitionDirection dir, Transform player, Transform spawnLocation) {
+    private IEnumerator TransitionCoroutine(TransitionDirection dir, Transform player, Transform spawnLocation, Room targetRoom) {
         float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
         PlayerController controller = player.GetComponent<PlayerController>();
         float timer = 1f; // timer for fading in and out screen as well as for how long the player moves automaticly
@@ -59,8 +59,11 @@ public class RoomManager : MonoBehaviour
         // After a sec teleport player to new Room and change the camera bound
         player.position = spawnLocation.position;
         controller.MidTransition();
-        confiner.m_BoundingShape2D = currentRoom.GetCameraBounds();
-        RoomEntered?.Invoke(currentRoom); // fix the background
+        confiner.m_BoundingShape2D = targetRoom.GetCameraBounds();
+
+        RoomEntered?.Invoke(targetRoom); // fix the background
+        currentRoom = targetRoom;
+
         // Player in new room logic
         StartCoroutine(NewRoomCoroutine(controller, timer));
     }

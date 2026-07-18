@@ -1,8 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-public class ParallaxBackground : MonoBehaviour
-{
+public class ParallaxBackground : MonoBehaviour {
     [SerializeField] private Vector2 parallaxEffectMultiplier;
 
     private Room belongRoom;
@@ -13,6 +12,9 @@ public class ParallaxBackground : MonoBehaviour
 
     private Vector3 originalSpritePosition;
     private Vector3 spritePositionOnRoomLeave;
+
+    private float lockTimer;
+    private float lockDuration = 2f;
 
     private void Awake() {
         belongRoom = GetComponentInParent<Room>();
@@ -33,24 +35,38 @@ public class ParallaxBackground : MonoBehaviour
     }
 
     private void Instance_playerLeftTheRoom(Room room) {
-        //if (room != belongRoom) return;
+        if (room == belongRoom) return;
 
+        lockTimer = lockDuration;
         transform.position = originalSpritePosition;
         lastCameraPosition = cameraTransform.position;
     }
 
+
+
     private void LateUpdate() {
-   
-        Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
+        Vector3 currentCamPos = cameraTransform.position;
+        Vector3 deltaMovement = currentCamPos - lastCameraPosition;
 
         if (belongRoom == RoomManager.instance.currentRoom) {
-            transform.position += new Vector3(
-                deltaMovement.x * parallaxEffectMultiplier.x,
-                deltaMovement.y * parallaxEffectMultiplier.y,
-                0f);
+            bool hasSavedPosition = spritePositionOnRoomLeave != Vector3.zero;
+            bool isLocked = lockTimer > 0f;
+
+            if (!hasSavedPosition || !isLocked) {
+                // Normal parallax movement
+                Vector3 parallaxDelta = new Vector3(
+                    deltaMovement.x * parallaxEffectMultiplier.x,
+                    deltaMovement.y * parallaxEffectMultiplier.y,
+                    0f);
+
+                transform.position += parallaxDelta;
+            } else {
+                // Hold position temporarily
+                transform.position = spritePositionOnRoomLeave;
+                lockTimer -= Time.deltaTime;
+            }
         }
 
-  
-        lastCameraPosition = cameraTransform.position;
+        lastCameraPosition = currentCamPos;
     }
 }
