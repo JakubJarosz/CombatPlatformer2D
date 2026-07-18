@@ -8,9 +8,11 @@ public class ParallaxBackground : MonoBehaviour
     private Room belongRoom;
 
     private Transform cameraTransform;
-    private Vector3 originalSpritePosition;
     private Vector3 lastCameraPosition;
     private bool skipNextFrame;
+
+    private Vector3 originalSpritePosition;
+    private Vector3 spritePositionOnRoomLeave;
 
     private void Awake() {
         belongRoom = GetComponentInParent<Room>();
@@ -22,8 +24,12 @@ public class ParallaxBackground : MonoBehaviour
         lastCameraPosition = cameraTransform.position;
         Sprite sprite = GetComponent<SpriteRenderer>().sprite;
         Texture2D texture = sprite.texture;
-        RoomManager.instance.roomEntered += Instance_playerLeftTheRoom;
-        Debug.Log(originalSpritePosition);
+        RoomManager.instance.RoomEntered += Instance_playerLeftTheRoom;
+        RoomManager.instance.ExitSequanceTriggered += Instance_ExitSequanceTriggered;
+    }
+
+    private void Instance_ExitSequanceTriggered() {
+        spritePositionOnRoomLeave = transform.position;
     }
 
     private void Instance_playerLeftTheRoom(Room room) {
@@ -31,17 +37,10 @@ public class ParallaxBackground : MonoBehaviour
 
         transform.position = originalSpritePosition;
         lastCameraPosition = cameraTransform.position;
-
-        skipNextFrame = true; 
     }
 
     private void LateUpdate() {
-        if (skipNextFrame) {
-            lastCameraPosition = cameraTransform.position;
-            skipNextFrame = false;
-            return;
-        }
-
+   
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
 
         if (belongRoom == RoomManager.instance.currentRoom) {
