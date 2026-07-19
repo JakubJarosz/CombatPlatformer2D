@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: rangeSize.x
-      value: 15.22
+      value: 15.3
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: rangeSize.y
@@ -106,7 +106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: detectionSize.x
-      value: 21.78
+      value: 42.6
       objectReference: {fileID: 0}
     - target: {fileID: 5552029624376251078, guid: 0f17186c12c2a024bb065143dc92bfec, type: 3}
       propertyPath: detectionSize.y

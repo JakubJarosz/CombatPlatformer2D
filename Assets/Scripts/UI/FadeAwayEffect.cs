@@ -45,4 +45,8 @@ public class FadeAwayEffect : MonoBehaviour
 
         image.color = c;
     }
+
+    public void BlackOutScreen() {
+
+    }
 }

@@ -2,8 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;
     private SpriteRenderer playerSprite;
     private Health playerHealth;
@@ -23,8 +22,11 @@ public class PlayerController : MonoBehaviour
     public float facingDir { get; private set; }
 
     private bool isInvincible;
+
     private bool isTransitioning;
-    private float transitionDir;
+    private TransitionDirection transitionDir;
+    private bool isMidTransition;
+    private bool transitionJump;
 
     // Event variables
     public event Action PerformJump;
@@ -67,7 +69,7 @@ public class PlayerController : MonoBehaviour
     private void Update() {
         if (!isTransitioning) {
             moveInputs = gameInput.GetMoveInput();
-        } 
+        }
 
         HandleState();
         Movement();
@@ -219,23 +221,47 @@ public class PlayerController : MonoBehaviour
     }
 
     // Used in TransitionRoom inside RoomManager
-    public void StartTransition(float dir) {
+    public void StartTransition(TransitionDirection dir) {
         isTransitioning = true;
         rb.gravityScale = 0f;
         transitionDir = dir;
     }
 
     private void MovePlayerDuringTransition() {
-        if (!isTransitioning) return;
-        rb.linearVelocity = new Vector2(transitionDir * moveSpeed, rb.linearVelocity.y);
-        moveInputs = 1;
+        if (!isTransitioning || transitionJump) return;
+        float dirNumb = transitionDir == TransitionDirection.Right || transitionDir == TransitionDirection.Top ? 1 : -1;
+        if (transitionDir == TransitionDirection.Left || transitionDir == TransitionDirection.Right) {
+            rb.linearVelocity = new Vector2(dirNumb * moveSpeed, rb.linearVelocity.y);
+            // used to trigger walk animation
+            moveInputs = 1;
+        } else if (transitionDir == TransitionDirection.Bottom) {
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+        } else {
+            rb.linearVelocity = new Vector2(0f, dirNumb * 12f); // 12 is how fast  the player gets Succked in during transition
+        }
+
+
+        if (isMidTransition) {
+            rb.linearVelocity = Vector2.zero;
+        }
     }
 
     public void MidTransition() {
+        isMidTransition = true;
         rb.gravityScale = 1f;
     }
 
+    public void PlayerInNewRoomTranistion() {
+        isMidTransition = false;
+        if (transitionDir == TransitionDirection.Top) {
+            transitionJump = true;
+            rb.linearVelocity = new Vector2(1f, jumpForce/1.5f);
+        }
+    }
+
     public void EndTransition() {
+        transitionJump = false;
+        isMidTransition = false;
         isTransitioning = false;
     }
 }

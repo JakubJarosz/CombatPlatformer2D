@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Door : MonoBehaviour
-{
+public class Door : MonoBehaviour {
     [SerializeField] private TransitionDirection dir;
     [SerializeField] private Vector2 wallDoorSize;
     [SerializeField] private Vector2 floorDoorSize;
@@ -12,7 +11,7 @@ public class Door : MonoBehaviour
     private Transform exitPoint;
 
     private float entryOffset = 1.3f;
-    
+
     private void OnValidate() {
         col = GetComponentInChildren<BoxCollider2D>();
         entryPoint = GetComponentInChildren<EntryMarker>().transform;
@@ -22,8 +21,13 @@ public class Door : MonoBehaviour
     }
 
     private void UpdateChildPositioning() {
-        // + Vector to position entry a little lower so the Player does not spawn in the air
-        entryPoint.localPosition = (entryOffset * SetDirectionOffset()) + new Vector2(0f, -1.1f);
+        // + Vector to position entry a little lower so the Player does not spawn in the air, (only for left and right)
+        if (SetDirectionOffset() == Vector2.right || SetDirectionOffset() == Vector2.left) {
+            entryPoint.localPosition = (entryOffset * SetDirectionOffset()) + new Vector2(0f, -1.1f);
+        } else {
+            entryPoint.localPosition = (entryOffset * SetDirectionOffset());
+        }
+
         exitPoint.localPosition = Vector3.zero;
     }
 
@@ -53,6 +57,6 @@ public class Door : MonoBehaviour
     public void HandleTriggerExit(Transform player) {
         RoomManager.instance.Transition(dir, player);
     }
-   
+
 }
 

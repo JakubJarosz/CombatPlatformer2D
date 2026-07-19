@@ -45,26 +45,33 @@ public class RoomManager : MonoBehaviour
     }
 
     private IEnumerator TransitionCoroutine(TransitionDirection dir, Transform player, Transform spawnLocation, Room targetRoom) {
-        float dirNumb = dir == TransitionDirection.Right || dir == TransitionDirection.Top ? 1 : -1;
+
         PlayerController controller = player.GetComponent<PlayerController>();
         float timer = 1f; // timer for fading in and out screen as well as for how long the player moves automaticly
         ExitSequanceTriggered?.Invoke(); // used in ParalaxEffect to save the background position on triggerExitSequance
 
         // Start Moving in the correct direction (still in the original room) and fade in the screen
-        controller.StartTransition(dirNumb);
+        controller.StartTransition(dir);
         StartCoroutine(fadeEffect.FadeIn(timer));
 
-        yield return new WaitForSeconds(timer + 0.2f);
-   
+        yield return new WaitForSeconds(timer);
+
+
+        yield return new WaitForSeconds(0.1f);
         // After a sec teleport player to new Room and change the camera bound
-        player.position = spawnLocation.position;
+        // Things that happens when the screen is black
         controller.MidTransition();
+        player.position = spawnLocation.position;
         confiner.m_BoundingShape2D = targetRoom.GetCameraBounds();
 
         RoomEntered?.Invoke(targetRoom); // fix the background
         currentRoom = targetRoom;
 
+        yield return new WaitForSeconds(0.5f);
+
         // Player in new room logic
+
+        controller.PlayerInNewRoomTranistion();
         StartCoroutine(NewRoomCoroutine(controller, timer));
     }
 
